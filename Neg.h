@@ -1,27 +1,27 @@
-#include "Expression.h"
+#ifndef FLIGHTSIMULATOR_NEG_H
+#define FLIGHTSIMULATOR_NEG_H
 
-#ifndef PROJECTNUM1_NEG_H
-#define PROJECTNUM1_NEG_H
+#define NEG_ONE -1
 
+#include "UnaryExpression.h"
 
-class Neg : public Expression {
-    //Members
-    Expression *negativeNumber;
+/**
+ * unary expression of negation
+ */
+class Neg : public UnaryExpression {
 public:
-
-    //Constructor
-    Neg(Expression *negativeNumber);
+    /**
+     * constructor
+     * @param expr
+     */
+    Neg(Expression *expr);
 
     /**
-     * calculate negative by map
+     * negate expression
+     * @return -(expression)
      */
-    virtual double calculate(map<string, double> &assignment);
-
-
-    ~Neg() {
-    }
-
+    virtual double calculate();
+    virtual ~Neg(){};
 };
 
-
-#endif //PROJECTNUM1_NEG_H
+#endif //FLIGHTSIMULATOR_NEG_H

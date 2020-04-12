@@ -1,43 +1,28 @@
-#include <string>
-#include <stdexcept>
-#include "Expression.h"
+#ifndef FLIGHTSIMULATOR_PLUS_H
+#define FLIGHTSIMULATOR_PLUS_H
+
 #include "BinaryExpression.h"
-#include "Num.h"
 
-#ifndef PROJECTNUM1_PLUS_H
-#define PROJECTNUM1_PLUS_H
+/**
+ * binary expression for addition
+ */
+class Plus : public BinaryExpression{
 
-using namespace std;
-
-class Plus : public Expression, public BinaryExpression {
 public:
-    //Constructors
-    Plus(Expression *leftArgument, Expression *rightArgument)
-            : BinaryExpression(leftArgument, rightArgument) {
-    }
-
-    Plus(double leftArgument, double rightArgument) : BinaryExpression(
-            new Num(leftArgument), new Num(rightArgument)) {
-    }
-
-    Plus(double leftArgument, Expression *rightArgument) : BinaryExpression(
-            new Num(leftArgument), rightArgument) {
-    }
-
-    Plus(Expression *leftArgument, double rightArgument) : BinaryExpression(
-            leftArgument, new Num(rightArgument)) {
-    }
+    /**
+     * constructor
+     * @param left
+     * @param right
+     */
+    Plus(Expression *left, Expression *right);
 
     /**
-    * The calculate function calculate by`map
-    * The function return the result of the plus expression
-    */
-    virtual double calculate(map<string, double> &assignment);
-
-    ~Plus() {
-    }
-
+     * calculate left and right expression and return addition of them
+     * @return left + right
+     */
+    virtual double calculate();
+    virtual ~Plus(){};
 };
 
 
-#endif //PROJECTNUM1_PLUS_H
+#endif //FLIGHTSIMULATOR_PLUS_H

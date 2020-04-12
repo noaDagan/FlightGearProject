@@ -1,16 +1,15 @@
 #include "Div.h"
 
-/**
-* The calculate function calculate by assignment`map
-* The function return the result of the expression div
-*/
-double Div::calculate(map<string, double> &assignment) {
-    double leftValue = 0;
-    double rightValue = 0;
-    leftValue = this->leftArgument->calculate(assignment);
-    rightValue = this->rightArgument->calculate(assignment);
-    if (rightValue != 0) {
-        return leftValue / rightValue;
+using namespace std;
+
+Div::Div(Expression *left, Expression *right) : BinaryExpression(left, right) {
+
+}
+
+double Div::calculate() {
+    double rightCalculate = this->getRight()->calculate();
+    if (rightCalculate == 0) {
+        __throw_invalid_argument("can't divide by zero");
     }
-    throw invalid_argument("");
+    return this->getLeft()->calculate() / rightCalculate;
 }

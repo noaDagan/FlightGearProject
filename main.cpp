@@ -1,28 +1,24 @@
 #include <iostream>
-#include "OpenServerCommand.h"
-#include "ConnectCommand.h"
-#include "Command.h"
-#include <iostream>
-#include <thread>
-#include <stdio.h>
-#include <stdlib.h>
-#include <netdb.h>
-#include <unistd.h>
-#include <netinet/in.h>
-#include <string.h>
-#include <sys/socket.h>
-#include <functional>
-#include "Expression.h"
-#include "CreateExpression.h"
-#include "CreateCommand.h"
+#include "Controller.h"
 
+using namespace std;
 
-int main(int argc, char* argv[]) {
-   CreateCommand* createCommand= new CreateCommand();
-   // Read the name of the text file from the command line
-   if (argc == 2) {
-       createCommand->lexer(argv[1]);
-   }
-   delete createCommand;
-   return 0;
+/**
+ * get script for controlling the flight simulator and runs it.
+ * @param argc
+ * @param argv
+ * @return
+ */
+int main(int argc, char *argv[]) {
+
+    if (argc != 2) {
+        // no file name entered
+        __throw_invalid_argument("no file name found!");
+    }
+    string filename = argv[1];
+
+    Controller controller;
+    controller.run(filename);
+
+    return 0;
 }

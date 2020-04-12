@@ -1,16 +1,19 @@
+#include <unistd.h>
 #include "SleepCommand.h"
+#include "ExpressionFactory.h"
+#include "Utility.h"
 
-//Constructor
-SleepCommand::SleepCommand() {
-
+SleepCommand::SleepCommand(DataBase &givenDataBase) {
+    this->dataBase = &givenDataBase;
 }
 
-/**
- * The function make the program sleep for a given time
- */
-int SleepCommand::doCommand(vector<string>::iterator &script) {
-    //Convert the number to double and sleep
-    sleep(atoi((*script).c_str()));
-    script += 2;
-    return 0;
+void SleepCommand::doCommand(vector<string>::iterator &it) {
+    string timeToSleep = *it++;
+    if (Utility::isCommand(timeToSleep)) {
+        // not a valid parameter !!
+        __throw_invalid_argument("invalid argument");
+    }
+    ExpressionFactory factory(*this->dataBase);
+    Expression *expression = factory.makeExpression(timeToSleep);
+    usleep(static_cast<unsigned int>(expression->calculate() * TO_MICRO));
 }

@@ -1,48 +1,32 @@
+#ifndef FLIGHTSIMULATOR_CONNECTCOMMAND_H
+#define FLIGHTSIMULATOR_CONNECTCOMMAND_H
+
+
 #include "Command.h"
-#include <iostream>
-#include <ostream>
-#include <thread>
-#include <stdio.h>
-#include <stdlib.h>
-#include <netdb.h>
-#include <unistd.h>
-#include <netinet/in.h>
-#include <string.h>
-#include <sys/socket.h>
-#include <functional>
-#include <pthread.h>
-#include "CheckForServerConnection.h"
-#include "ValueControlForFlight.h"
-#include "ExpressionCommand.h"
-#include "CheckEndScript.h"
+#include "DataWriterClient.h"
 
-
-#ifndef PROJECTNUM1_CONNECTCLIENT_H
-#define PROJECTNUM1_CONNECTCLIENT_H
-
-using namespace std;
-
+/**
+ * connects to a server
+ */
 class ConnectCommand : public Command {
-    // Members
-    ValueControlForFlight *valueControlForFlight;
-    CheckForServerConnection *checkForServerConnection;
-    CheckEndScript *checkEndScript;
+    DataWriterClient *dataWriterClient;
+    DataBase *dataBase;
+    int threadID;
 public:
-
-    //Constructor
-    ConnectCommand(CheckForServerConnection *isTrue,
-                   ValueControlForFlight *valueControlForFlight,
-                   CheckEndScript *checkEndScript);
-
-    // Distructor
-    ~ConnectCommand();
+    /**
+     * constructor
+     * @param dataWriter
+     * @param data
+     */
+    ConnectCommand(DataWriterClient &dataWriter, DataBase &data);
 
     /**
-     *  The function execute the connect.
-     *  The function save the parameters of the ParamsConnect struct
-    */
-    virtual int doCommand(vector<string>::iterator &script);
+     * opens a socket and connects to server
+     * @param it
+     */
+    virtual void doCommand(vector<string>::iterator &it);
+    virtual ~ConnectCommand(){};
 };
 
 
-#endif //PROJECTNUM1_CONNECTCLIENT_H
+#endif //FLIGHTSIMULATOR_CONNECTCOMMAND_H

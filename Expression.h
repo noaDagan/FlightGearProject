@@ -1,21 +1,20 @@
+#ifndef FLIGHTSIMULATOR_EXPRESSION_H
+#define FLIGHTSIMULATOR_EXPRESSION_H
 
-
-#include <map>
 #include <string>
+#include <map>
+#include <queue>
 
 using namespace std;
-#ifndef PROJECTNUM1_EXPRESSION_H
-#define PROJECTNUM1_EXPRESSION_H
 
+/**
+ * interface of all expression
+ */
 class Expression {
-
 public:
-    /**
-    * The function Calculate the expression by assignment map
-    * The function  return the result of the expression using
-    */
-    virtual double calculate(map<string, double> &assignment) = 0;
-
+    virtual double calculate() = 0;
+    virtual ~Expression(){};
 };
 
-#endif //PROJECTNUM1_EXPRESSION_H
+
+#endif //FLIGHTSIMULATOR_EXPRESSION_H

@@ -1,47 +1,35 @@
+//
+// Created by or on 12/20/18.
+//
+
+#ifndef FLIGHTSIMULATOR_OPENSERVERCOMMAND_H
+#define FLIGHTSIMULATOR_OPENSERVERCOMMAND_H
+
 #include "Command.h"
-#include <iostream>
-#include <thread>
-#include <stdio.h>
-#include <stdlib.h>
-#include <netdb.h>
-#include <unistd.h>
-#include <netinet/in.h>
-#include <string.h>
-#include <sys/socket.h>
-#include <functional>
-#include "FlightValueMap.h"
-#include "CheckEndScript.h"
-#include "CheckForServerConnection.h"
+#include "DataReaderServer.h"
 #include <pthread.h>
 
-
-#ifndef PROJECTNUM1_OPENSERVERCOMMAND_H
-#define PROJECTNUM1_OPENSERVERCOMMAND_H
-using namespace std;
-
+/**
+ * opens a server
+ */
 class OpenServerCommand : public Command {
-    // Members
-    FlightValueMap *flightValueMap;
-    //Check if  reached the end of the script
-    CheckEndScript *checkEndScript;
-    CheckForServerConnection *checkForServerConnection;
-
+    DataReaderServer *dataReaderServer;
+    DataBase *dataBase;
 public:
-
-    //Constructor
-    OpenServerCommand(FlightValueMap *f,
-                      CheckForServerConnection *checkForServerConnection1,
-                      CheckEndScript *checkEndScript);
-
     /**
-     * The function open a server that listen to port 5400
+     * constructor
+     * @param server can open a socket
+     * @param data
      */
-    virtual int doCommand(vector<string>::iterator &script);
+    OpenServerCommand(DataReaderServer &server, DataBase &data);
 
-    ~OpenServerCommand() {
-    }
+/**
+ * opens a socket and creates a server than users can connect to it
+ * @param it
+ */
+    virtual void doCommand(vector<string>::iterator &it);
 
+    virtual ~OpenServerCommand() {};
 };
 
-
-#endif //PROJECTNUM1_OPENSERVERCOMMAND_H
+#endif //FLIGHTSIMULATOR_OPENSERVERCOMMAND_H

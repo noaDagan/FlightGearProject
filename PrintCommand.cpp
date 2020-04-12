@@ -1,28 +1,22 @@
+#include <iostream>
 #include "PrintCommand.h"
+#include "Utility.h"
+#include "ExpressionFactory.h"
 
-//Constructor
-PrintCommand::PrintCommand(SymbolTable *symbolTable) {
-    this->symbolTable = symbolTable;
+PrintCommand::PrintCommand(DataBase &givenDataBase) {
+    this->dataBase = &givenDataBase;
 }
 
-/**
- * The function print the message ot receive
- */
-int PrintCommand::doCommand(vector<string>::iterator &script) {
-    string printString = "";
-    // If the message is a string get the string
-    if ((*script)[0] == '\"') {
-        while ((*script) != ";") {
-            printString += (*script);
-            script++;
-        }
-        int sizeString = printString.length();
-        printString = printString.substr(1,sizeString - 2);
-        // Else get the number and print it
+void PrintCommand::doCommand(vector<string>::iterator &it) {
+    string toPrint = *it++;
+    if (toPrint[0] == '"') {
+        // delete " and then print
+        toPrint.erase(0, 1);
+        toPrint.erase(toPrint.length() - 1, 1);
     } else {
-        printString = (*script);
+        // calculate expression(or var) and then print
+        ExpressionFactory factory(*this->dataBase);
+        toPrint = to_string(factory.makeExpression(toPrint)->calculate());
     }
-    cout << printString << endl;
-    script++;
-    return 0;
+    cout << toPrint << endl;
 }

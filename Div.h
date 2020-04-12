@@ -1,39 +1,29 @@
+#ifndef FLIGHTSIMULATOR_DIV_H
+#define FLIGHTSIMULATOR_DIV_H
 
-#include <string>
-#include <stdexcept>
-#include "Expression.h"
+#include <iostream>
 #include "BinaryExpression.h"
-#include "Num.h"
 
-#ifndef PROJECTNUM1_DIV_H
-#define PROJECTNUM1_DIV_H
+/**
+ * binary expression for division
+ */
+class Div : public BinaryExpression {
 
-class Div : public Expression, public BinaryExpression {
 public:
-    //Constructors
-    Div(Expression *leftArgument, Expression *rightArgument) : BinaryExpression(
-            leftArgument, rightArgument) {
-    }
-
-    Div(double leftArgument, double rightArgument) : BinaryExpression(
-            new Num(leftArgument), new Num(rightArgument)) {
-    }
-
-    Div(double leftArgument, Expression *rightArgument) : BinaryExpression(
-            new Num(leftArgument), rightArgument) {
-    }
-
-    Div(Expression *leftArgument, double rightArgument) : BinaryExpression(
-            leftArgument, new Num(rightArgument)) {
-    }
+    /**
+     * constructor
+     * @param left
+     * @param right
+     */
+    Div(Expression *left, Expression *right);
 
     /**
-    * The calculate function calculate by assignment`map
-    * The function return the result of the expression div
-    */
-    virtual double calculate(map<string, double> &assignment);
-
-
+     * calculate left and right expression and return division between them
+     * @return left / right
+     */
+    virtual double calculate();
+    virtual ~Div(){};
 };
 
-#endif //PROJECTNUM1_DIV_H
+
+#endif //FLIGHTSIMULATOR_DIV_H

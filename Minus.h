@@ -1,40 +1,26 @@
-#include "Expression.h"
+#ifndef FLIGHTSIMULATOR_MINUS_H
+#define FLIGHTSIMULATOR_MINUS_H
+
 #include "BinaryExpression.h"
-#include "Num.h"
 
+/**
+ * binary expression for subtraction
+ */
+class Minus : public BinaryExpression {
 
-#ifndef PROJECTNUM1_MINUS_H
-#define PROJECTNUM1_MINUS_H
-
-
-class Minus : public Expression, public BinaryExpression {
 public:
-    //Constuctors
-    Minus(Expression *leftArgument, Expression *rightArgument)
-            : BinaryExpression(leftArgument, rightArgument) {
-    }
-
-    Minus(double leftArgument, double rightArgument) : BinaryExpression(
-            new Num(leftArgument), new Num(rightArgument)) {
-    }
-
-    Minus(double leftArgument, Expression *rightArgument) : BinaryExpression(
-            new Num(leftArgument), rightArgument) {
-    }
-
-    Minus(Expression *leftArgument, double rightArgument) : BinaryExpression(
-            leftArgument, new Num(rightArgument)) {
-    }
+    /**
+     * constructor
+     * @param left
+     * @param right
+     */
+    Minus(Expression *left, Expression *right);
 
     /**
-    * The calculate function calculate by assignment`map
-    * The function return the result of the minus expression
-    */
-    virtual double calculate(map<string, double> &assignment);
-
-    ~Minus() {
-    }
+     * calculate left and right expression and return subtraction between them
+     * @return left - right
+     */
+    virtual double calculate();
 };
 
-
-#endif //PROJECTNUM1_MINUS_H
+#endif //FLIGHTSIMULATOR_MINUS_H

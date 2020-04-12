@@ -1,26 +1,37 @@
 #include "IfCommand.h"
+#include "Utility.h"
 
-// Constructor
-IfCommand::IfCommand(BoolExpression *boolExpres, list<ExpressionCommand *> list, SymbolTable* symbolTable) {
-    this->expressionCommandList = list;
-    this->boolExpression = boolExpres;
-    this->symbolTable=symbolTable;
+IfCommand::IfCommand(unordered_map<string, Command *> &commands, DataBase &db)
+        : ConditionCommand(commands, db) {
 }
 
+void IfCommand::doCommand(vector<string>::iterator &it) {
+    string firstExpr = *it++;
+    string conditionOp = *it++;
+    string secExpr = *it++;
+    if (Utility::isCommand(firstExpr) || Utility::isCommand(conditionOp) ||
+        Utility::isCommand(secExpr)) {
+        // not a valid parameter !!
+        __throw_invalid_argument("invalid argument");
+    }
+    // it = {
+    int countParenth = 1;
+    ++it;
+    if (parseCondition(firstExpr, conditionOp, secExpr)) {
+        doAll(it);
+        // it = }
+        ++it;
+    } else {
+        // skip the 'if block'
+        while (countParenth != 0) {
+            if (*it == "{") {
+                countParenth++;
+            }
 
-/**
- * The function execute all the command in the list if the bool expression if true
- */
-int IfCommand::doCommand(vector<string>::iterator &script) {
-    //if the bool expression is true
-    if (this->boolExpression->calculateBool(
-            this->symbolTable->getSymbolTableMap())) {
-        list<ExpressionCommand *>::iterator itr;
-        //Go ovet the list and execute the command
-        for (itr = this->expressionCommandList.begin();
-             itr != this->expressionCommandList.end(); itr++) {
-            map<string, double> symbolMap = this->symbolTable->getSymbolTableMap();
-            (*itr)->calculate(symbolMap);
+            if (*it == "}") {
+                countParenth--;
+            }
+            ++it;
         }
     }
 }

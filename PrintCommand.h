@@ -1,32 +1,30 @@
+#ifndef FLIGHTSIMULATOR_PRINTCOMMAND_H
+#define FLIGHTSIMULATOR_PRINTCOMMAND_H
+
 #include "Command.h"
-#include "SymbolTable.h"
-#include <map>
-#include <iostream>
-#include <string>
-#include <string.h>
 
-#ifndef PROJECTNUM1_PRINTCOMMAND_H
-#define PROJECTNUM1_PRINTCOMMAND_H
-
-
+/**
+ * prints strings and variables
+ */
 class PrintCommand : public Command {
-
-    //Member
-    SymbolTable *symbolTable;
+    DataBase *dataBase;
 public:
-
-    //Constructor
-    PrintCommand(SymbolTable *symbolTable);
+    /**
+     * constructor
+     * @param givenDataBase
+     */
+    PrintCommand(DataBase &givenDataBase);
 
     /**
-     * The function print the message ot receive
+     * checks if the what we need to print is a string or a variable:
+     * string - prints to screen
+     * variable - gets his value and prints to screen.
+     * @param it
      */
-    virtual int doCommand(vector<string>::iterator &script);
+    virtual void doCommand(vector<string>::iterator &it);
 
-    ~PrintCommand() {
-    }
-
+    virtual ~PrintCommand() {};
 };
 
 
-#endif //PROJECTNUM1_PRINTCOMMAND_H
+#endif //FLIGHTSIMULATOR_PRINTCOMMAND_H

@@ -1,33 +1,30 @@
-#include <vector>
+#ifndef FLIGHTSIMULATOR_IFCOMMAND_H
+#define FLIGHTSIMULATOR_IFCOMMAND_H
+
 #include "Command.h"
-#include "ExpressionCommand.h"
-#include <list>
-#include "BoolExpression.h"
-#include "SymbolTable.h"
+#include "ConditionCommand.h"
 
-#ifndef PROJECTNUM1_IFCOMMAND_H
-#define PROJECTNUM1_IFCOMMAND_H
+/**
+ * IfCommand class is a type of ConditionCommand
+ */
+class IfCommand : public ConditionCommand {
 
-
-class IfCommand : public Command {
-    //Boolean condition
-    BoolExpression *boolExpression;
-    //List of commandExpression to execute
-    list<ExpressionCommand *> expressionCommandList;
-    SymbolTable *symbolTable;
 public:
-    //Constructor
-    IfCommand(BoolExpression *boolExpression, list<ExpressionCommand *> expressionCommandList,
-              SymbolTable *symbolTable);
+    /**
+     * constructor
+     * @param commands
+     * @param db
+     */
+    IfCommand(unordered_map<string, Command *> &commands, DataBase &db);
 
     /**
-     * The function execute all the command in the list if the bool expression if true
+     * preform commands if the condition is true
+     * @param it
      */
-    virtual int doCommand(vector<string>::iterator &script);
+    virtual void doCommand(vector<string>::iterator &it);
+    virtual ~IfCommand(){};
 
-    ~IfCommand() {
-    }
 };
 
 
-#endif //PROJECTNUM1_IFCOMMAND_H
+#endif //FLIGHTSIMULATOR_IFCOMMAND_H

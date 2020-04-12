@@ -1,24 +1,30 @@
-#include "Command.h"
-#include <unistd.h>
+#ifndef FLIGHTSIMULATOR_SLEEPCOMMAND_H
+#define FLIGHTSIMULATOR_SLEEPCOMMAND_H
 
-#ifndef PROJECTNUM1_SLEEPCOMMAND_H
-#define PROJECTNUM1_SLEEPCOMMAND_H
+#define TO_MICRO 1000
 
+#include "CommandExpression.h"
 
+/**
+ * sleeps - pauses the program for a certain amount of time.
+ */
 class SleepCommand : public Command {
+    DataBase *dataBase;
 public:
-    //Constructor
-    SleepCommand();
+    /**
+     * constructor
+     * @param givenDataBase
+     */
+    SleepCommand(DataBase &givenDataBase);
 
     /**
-     * The function make the program sleep for a given time
+     * sleeps for X microseconds
+     * @param it
      */
-    virtual int doCommand(vector<string>::iterator &script);
+    virtual void doCommand(vector<string>::iterator &it);
 
-    ~SleepCommand() {
-    }
-
+    virtual ~SleepCommand() {};
 };
 
 
-#endif //PROJECTNUM1_SLEEPCOMMAND_H
+#endif //FLIGHTSIMULATOR_SLEEPCOMMAND_H
