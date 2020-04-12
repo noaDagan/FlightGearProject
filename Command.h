@@ -1,21 +1,24 @@
+#ifndef FLIGHTSIMULATOR_COMMAND_H
+#define FLIGHTSIMULATOR_COMMAND_H
+
 #include <string>
 #include <vector>
-
-#ifndef PROJECTNUM1_COMMAND_H
-#define PROJECTNUM1_COMMAND_H
+#include "DataBase.h"
 
 using namespace std;
 
-
+/**
+ * abstract class for commands
+ */
 class Command {
+
 public:
     /**
-     * The function execute the command
-     * The function accept vector<string>::iterator
+     * preforms the command with the parameters given.
+     * @param it
      */
-    virtual int doCommand(vector<string>::iterator &script) = 0;
-
+    virtual void doCommand(vector<string>::iterator &it) = 0;
+    virtual ~Command(){};
 };
 
-
-#endif //PROJECTNUM1_COMMAND_H
+#endif //FLIGHTSIMULATOR_COMMAND_H
